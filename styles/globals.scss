@@ -19,3 +19,8 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.active {
+  opacity: 1;
+  border-bottom: solid 2px white;
+}
