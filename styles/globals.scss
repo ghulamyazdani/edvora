@@ -22,5 +22,14 @@ a {
 
 .active {
   opacity: 1;
-  border-bottom: solid 2px white;
+  text-decoration: underline;
+  text-underline-offset: 9px;
+  transition: all 0.2s ease-in-out;
+}
+.cat {
+  p:hover {
+    text-decoration: underline;
+    text-underline-offset: 9px;
+    transition: all 0.2s ease-in-out;
+  }
 }

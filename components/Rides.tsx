@@ -3,12 +3,16 @@ import Filter from "./icons/Filter";
 import List from "./List";
 import { getRides } from "../services";
 export default function Rides() {
+  const [Up, setUp]: any = useState(false);
+  const [Near, setNear]: any = useState(true);
+  const [Past, setPast]: any = useState(false);
   const [Data, setData]: any = useState([]);
   useEffect(() => {
     getRides().then((res) => {
       setData(res);
     });
   }, []);
+
   function handleFilter() {
     const filter: any = document.querySelector(".filter");
     if (filter.classList.contains("hidden")) {
@@ -17,33 +21,60 @@ export default function Rides() {
       filter.classList.add("hidden");
     }
   }
-  function handleCat() {
-    console.log("catClicked");
+  function handleCat(param: any) {
+    const Nearest: any = document.getElementById("Nearest");
+    const Upcoming: any = document.getElementById("Upcoming");
+    const Past: any = document.getElementById("Past");
+    if (param === "Nearest") {
+      Nearest.classList.add("active");
+      Upcoming.classList.remove("active");
+      Past.classList.remove("active");
+      setUp(false);
+      setPast(false);
+      setNear(true);
+    } else if (param === "Upcoming") {
+      Nearest.classList.remove("active");
+      Upcoming.classList.add("active");
+      Past.classList.remove("active");
+      setUp(true);
+      setPast(false);
+      setNear(false);
+    } else if (param === "Past") {
+      Nearest.classList.remove("active");
+      Upcoming.classList.remove("active");
+      Past.classList.add("active");
+      setUp(false);
+      setPast(true);
+      setNear(false);
+    }
   }
   return (
     <>
       <div className="text-white bg-inherit flex flex-row justify-between mt-10 font-inter pl-12 pr-8">
-        <div className="flex flex-row gap-7 text-sm lg:text-lg">
+        <div className="cat flex flex-row gap-7 text-sm lg:text-lg">
           <p
-            className="active opacity-70 cursor-pointer"
+            className="active  opacity-70 cursor-pointer"
+            id="Nearest"
             onClick={() => {
-              handleCat();
+              handleCat("Nearest");
             }}
           >
             Nearest rides
           </p>
           <p
-            className="opacity-70 cursor-pointer"
+            className="Upcoming opacity-70 cursor-pointer"
+            id="Upcoming"
             onClick={() => {
-              handleCat();
+              handleCat("Upcoming");
             }}
           >
             Upcoming rides
           </p>
           <p
             className="opacity-70 cursor-pointer"
+            id="Past"
             onClick={() => {
-              handleCat();
+              handleCat("Past");
             }}
           >
             Past rides
@@ -85,7 +116,7 @@ export default function Rides() {
           </div>
         </div>
       </div>
-      <List Data={Data} />
+      <List Data={Data} Up={Up} Past={Past} />
     </>
   );
 }

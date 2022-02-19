@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import { getUser } from "../services";
-export default function List({ Data }: any) {
+export default function List({ Data, Up, Past }: any) {
   const [user, setUser]: any = useState([]);
   useEffect(() => {
     getUser().then((res) => {
@@ -23,10 +23,8 @@ export default function List({ Data }: any) {
   function checkDistance(path: any) {
     var distance = user.station_code;
     path.forEach((element: any) => {
-      console.log(element);
       if (Math.abs(element - user.station_code) < distance) {
         distance = Math.abs(element - user.station_code);
-        console.log(distance);
       }
     });
     return distance;
