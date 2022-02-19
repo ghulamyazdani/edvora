@@ -2,13 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { getUser } from "../services";
 export default function List({ Data }: any) {
-  const [user, setUser] = useState([]);
+  const [user, setUser]: any = useState([]);
   useEffect(() => {
     getUser().then((res) => {
       setUser(res);
     });
   }, []);
-  console.log(user);
   function getDate(param: any) {
     const date = new Date(param);
     return date.toLocaleString("en-US", {
@@ -21,6 +20,18 @@ export default function List({ Data }: any) {
       second: "numeric",
     });
   }
+  function checkDistance(path: any) {
+    var distance = user.station_code;
+    path.forEach((element: any) => {
+      console.log(element);
+      if (Math.abs(element - user.station_code) < distance) {
+        distance = Math.abs(element - user.station_code);
+        console.log(distance);
+      }
+    });
+    return distance;
+  }
+
   return (
     <div>
       {Data.map((ride: any) => (
@@ -39,14 +50,15 @@ export default function List({ Data }: any) {
                 {ride.origin_station_code}
               </li>
               <li>
-                <span className="opacity-70"> Ride path :</span>{" "}
-                {ride.station_path}
+                <span className="opacity-70"> Ride path :</span> [
+                {ride.station_path.toString()}]
               </li>
               <li>
                 <span className="opacity-70">Date :</span> {getDate(ride.date)}
               </li>
               <li>
-                <span className="opacity-70">Distance :</span> 20{" "}
+                <span className="opacity-70">Distance :</span>{" "}
+                {checkDistance(ride.station_path)}{" "}
               </li>
             </ul>
           </div>

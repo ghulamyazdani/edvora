@@ -38,7 +38,7 @@ export default function Rides() {
               handleCat();
             }}
           >
-            Upcoming rides (4)
+            Upcoming rides
           </p>
           <p
             className="opacity-70 cursor-pointer"
@@ -46,7 +46,7 @@ export default function Rides() {
               handleCat();
             }}
           >
-            Past rides (2)
+            Past rides
           </p>
         </div>
         <div
